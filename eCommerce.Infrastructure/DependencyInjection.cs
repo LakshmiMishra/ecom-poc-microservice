@@ -1,4 +1,6 @@
 ﻿
+using eCommerce.Core.RepositoryContracts;
+using eCommerce.Infrastructure.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace eCommerce.Infrastructure;
@@ -10,10 +12,13 @@ namespace eCommerce.Infrastructure;
     /// 
     public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
-            // Add infrastructure services here, e.g., database contexts, repositories, etc.
-            // services.AddDbContext<ApplicationDbContext>(options =>
-            //     options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
-            return services;
+        // Add infrastructure services here, e.g., database contexts, repositories, etc.
+        // services.AddDbContext<ApplicationDbContext>(options =>
+        //     options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+        //Core services often include data access, caching and other low-level components.
+
+        services.AddTransient<IUsersRepository, UsersRepository>();
+        return services;
     }
 }
 
