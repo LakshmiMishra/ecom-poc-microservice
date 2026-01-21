@@ -23,9 +23,28 @@ namespace eCommerce.API
                 options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
             });
             builder.Services.AddAutoMapper(typeof(ApplicationUserMappingProfile).Assembly);
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddCors(options=>
+            {
+                options.AddDefaultPolicy(policy =>
+                {
+                    policy.WithOrigins("http://localhost:4200")
+                          .AllowAnyHeader()
+                          .AllowAnyMethod();
+                });
+            });
+            //Add Swagger
+            builder.Services.AddSwaggerGen();
+
+
+
             var app = builder.Build();
             app.UseExceptionHandlingMiddleware();
             app.UseRouting();
+            app.UseSwagger();
+            app.UseSwaggerUI();
+
+            app.UseCors();
 
             app.UseAuthentication();
             app.UseAuthorization();
