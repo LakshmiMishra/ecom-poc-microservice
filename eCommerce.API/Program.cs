@@ -1,7 +1,10 @@
 using eCommerce.API.Middlewares;
 using eCommerce.Core;
+using eCommerce.Core.Mapper;
 using eCommerce.Infrastructure;
+using Microsoft.Extensions.DependencyInjection;
 using System.Text.Json.Serialization;
+
 
 namespace eCommerce.API
 {
@@ -19,7 +22,7 @@ namespace eCommerce.API
             {
                 options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
             });
-            //Commit TestService
+            builder.Services.AddAutoMapper(typeof(ApplicationUserMappingProfile).Assembly);
             var app = builder.Build();
             app.UseExceptionHandlingMiddleware();
             app.UseRouting();

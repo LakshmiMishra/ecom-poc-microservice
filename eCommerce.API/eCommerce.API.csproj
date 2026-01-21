@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+	  <PackageReference Include="AutoMapper" Version="13.0.1" />
     <ProjectReference Include="..\eCommerce.Core\eCommerce.Core.csproj" />
     <ProjectReference Include="..\eCommerce.Infrastructure\eCommerce.Infrastructure.csproj" />
   </ItemGroup>
