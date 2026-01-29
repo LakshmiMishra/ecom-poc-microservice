@@ -1,8 +1,9 @@
-using eCommerce.ProductsService.DataAccessLayer;
-using eCommerce.ProductsService.BusinessLogicLayer;
-using eCommerce.ProductsMicroService.API.Middleware;
-using FluentValidation.AspNetCore;
 using eCommerce.ProductsMicroService.API.APIEndpoints;
+using eCommerce.ProductsMicroService.API.Middleware;
+using eCommerce.ProductsService.BusinessLogicLayer;
+using eCommerce.ProductsService.DataAccessLayer;
+using FluentValidation.AspNetCore;
+using Microsoft.Extensions.Options;
 
 namespace ProductsMicroService.API
 {
@@ -18,7 +19,15 @@ namespace ProductsMicroService.API
 
             builder.Services.AddControllers();
             builder.Services.AddFluentValidationAutoValidation();
-
+            builder.Services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(policy =>
+                {
+                    policy.WithOrigins("http://localhost:4200")
+                          .AllowAnyHeader()
+                          .AllowAnyMethod();
+                });
+            });
             //Add Swagger/OpenAPI
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -34,7 +43,7 @@ namespace ProductsMicroService.API
 
             app.UseExceptionHandlingMiddleware();
             app.UseRouting();
-
+            app.UseCors();
             app.UseAuthentication();
             app.UseAuthorization();
               
